@@ -14,6 +14,17 @@ Typical use cases include:
 * normalizing separators and casing
 * applying any custom text transformation without noisy intermediate updates
 
+```swift
+struct ContentView: View {
+    @State var vm: ViewModel = .init()
+    
+    var body: some View {
+        FormattingTextField("Name", text: $vm.name) {
+            String($0.prefix(30))
+        }
+    }
+}
+```
 
 ### Read more here:
 
