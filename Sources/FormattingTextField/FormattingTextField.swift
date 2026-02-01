@@ -48,7 +48,9 @@ public struct FormattingTextField: View {
     public var body: some View {
         // Underlying SwiftUI TextField bound to the internal state.
         TextField(title, text: $internalText)
-            .onAppear { sync(from: text) }
+            .onAppear {
+                apply(text)
+            }
 
             // When the user types, propagate changes:
             // 1) Take `internalText` (raw)
@@ -60,7 +62,7 @@ public struct FormattingTextField: View {
 
             // When the external binding changes, normalize it and reflect back into `internalText`.
             .onChange(of: text) { newValue in
-                sync(from: newValue)
+                apply(newValue)
             }
     }
 
@@ -77,10 +79,4 @@ public struct FormattingTextField: View {
             text = processed
         }
     }
-
-    /// Normalizes an external value and updates internal state by delegating to `apply`.
-    private func sync(from external: String) {
-        apply(external)
-    }
 }
-
